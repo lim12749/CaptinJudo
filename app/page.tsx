@@ -4,7 +4,7 @@ import ImageSlider from "@/components/index";
 
 export default function Home() {
   return (
-      <main className="bg-gray-100 sm:bg-red-100 md:bg-green-100 lg:bg-cyan-100 xl:bg-purple-100
+      <main className="sm:bg-red-100 md:bg-green-100 lg:bg-cyan-100 xl:bg-purple-100
      2xl:bg-orange-100 min-h-screen flex items-center justify-center ">
         <header className="w-full fixed top-0 z-50 bg-gray-800  text-white py-4 flex justify-between items-center">
           <p className="text-2xl font-bold ml-4"> CPT 캡틴 유도관</p>
@@ -20,13 +20,13 @@ export default function Home() {
         </header>
 
         <div className="flex flex-col w-full">
-          <div className="bg-slate-600 h-screen flex items-center justify-center">
+          <div className="bg-white h-screen flex items-center justify-center">
             <div className="text-blue-600 text-2xl">
               <p>캡틴 유도관 </p>
               <p> 운동 프로그램</p>
             </div>
           </div>
-          <div className="bg-orange-200 h-screen flex items-center justify-center">
+          <div className="bg-gray-200 h-screen flex items-center justify-center">
             <div className="flex flex-col items-center p-5">
               <div className="
               bg-white text-black rounded-2xl w-full shadow-lg p-5 ">관장님 소개
@@ -50,19 +50,18 @@ export default function Home() {
 
             </div>
           </div>
-          <div className="bg-red-200 h-screen flex items-center justify-center">
+          <div className="bg-white h-screen flex items-center justify-center">
             <div className="text-orange-500 text-2xl"> 채육관 목표
               <p> 다이어트 </p>
               <p> 호신술 </p>
             </div>
           </div>
-          <div className="bg-white h-screen flex items-center justify-center">
-            <div className="text-orange-500 text-2xl">
-              <p> 시설 사진 </p>
+          <div className="bg-gray-200 h-screen flex items-center justify-center">
+            <div className="text-black text-2xl">
               <ImageSlider/>
             </div>
           </div>
-          <div className="bg-green-300-200 h-screen flex items-center justify-center">
+          <div className="bg-white h-screen flex items-center justify-center">
             <div className="text-orange-500 text-2xl"> 오시는길
             </div>
           </div>
