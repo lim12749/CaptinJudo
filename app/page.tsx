@@ -22,7 +22,7 @@ export default function Home() {
         <div className="flex flex-col w-full relative ">
           <div className="bg-white h-screen flex items-center justify-center relative">
             <div className="">
-              <p className="px-4 mt-[-10rem] font-bold text-9xl">CAPTAIN JUDO </p>
+              <p className="px-4 mt-[-10rem] font-bold text-7xl">CAPTAIN JUDO </p>
               <p className="text-right font-bold font text-2xl mr-14"> 유능제강 </p>
               <p className="text-right font-bold text-2xl  mt-4 mr-14"> 예시예종 </p>
             </div>
