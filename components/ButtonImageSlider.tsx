@@ -2,9 +2,9 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import bg00 from '../public/img/Bg00.jpg';
-import bg01 from '../public/img/Bg01.jpg';
-import bg02 from '../public/img/Bg02.jpg';
+import bg00 from '../public/img/Slid00.jpg';
+import bg01 from '../public/img/Slide01.jpg';
+import bg02 from '../public/img/Slide02.jpg';
 
 const ButtonSlider = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
