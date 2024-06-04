@@ -7,6 +7,7 @@ import ProfileCard from "@/components/OnCardRotate";
 import ButtonSlider from "@/components/ButtonImageSlider";
 
 export default function Home() {
+
     const InstaButtonClick = () => {
         window.location.href = 'https://www.instagram.com/captain_judo/';
     };
@@ -25,9 +26,14 @@ export default function Home() {
     남녀노소 모두 할 수 있는 유도! 유도가 궁금하시다면 용인대 캡틴 유도장으로 오세요. 즐겁고 건강한 유도 함께 해요!`;
 
     return (
-        <div className="flex flex-col w-full relative">
-            {/*상단에 고정하기위해 fixed*/}
-            <div className="fixed w-full z-10">
+        <>
+            <head>
+                <title> 용인대 캡틴 유도관</title>
+                <meta name="google-site-verification" content="QkkSgZI9zOyScuRB5XO9q9ClTLFQyhwgYiJqzJt9j9g"/>
+            </head>
+            <div className="flex flex-col w-full relative">
+                {/*상단에 고정하기위해 fixed*/}
+                <div className="fixed w-full z-10">
                 <nav className="bg-white flex items-center justify-between p-4">
                     <a href="http://localhost:8080" className="mx-2">
                         <p className="text-3xl font-bold">CPT</p>
@@ -156,5 +162,6 @@ export default function Home() {
                 </section>
             </main>
         </div>
+        </>
     );
 }
