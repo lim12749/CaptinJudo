@@ -1,20 +1,33 @@
 "use client";
 
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import ImageSlider from "@/components/Index"; // 이미지 슬라이더 컴포넌트 임포트
-import Head from "next/head"; // Head 컴포넌트를 사용하여 HTML <head> 태그에 콘텐츠를 추가
+import Head from "next/head";
 
 export default function Home() {
+    const [instaLink, setInstaLink] = useState("https://www.instagram.com/captain_judo/");
+    const [naverLink, setNaverLink] = useState("https://m.blog.naver.com/captain_judo?tab=1");
+
+    useEffect(() => {
+        // API 호출하여 링크 정보 가져오기
+        fetch('/api/getLinks')
+            .then(response => response.json())
+            .then(data => {
+                if (data.instaLink) setInstaLink(data.instaLink);
+                if (data.naverLink) setNaverLink(data.naverLink);
+            })
+            .catch(error => console.error('Error fetching links:', error));
+    }, []);
+
     // 인스타그램 버튼 클릭 핸들러
     const InstaButtonClick = () => {
-        window.location.href = 'https://www.instagram.com/captain_judo/';
+        window.location.href = instaLink;
     };
 
     // 네이버 블로그 버튼 클릭 핸들러
     const NaverBlogButtonClick = () => {
-        window.location.href = 'https://m.blog.naver.com/captain_judo?tab=1';
+        window.location.href = naverLink;
     };
 
     // 메뉴 열기/닫기 상태 관리
