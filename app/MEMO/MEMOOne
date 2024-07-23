@@ -1,0 +1,12 @@
+https://heroicons.com/ 아이콘 사용하기
+
+npm install @heroicons/react 설치
+
+import { ChatBubbleOvalLeftEllipsisIcon } from "@heroicons/react/24/solid"; 임포트
+
+
+//다시 시작했는데 package.json이 날라가서
+npm run dev이런게 전부 안된다.
+우선 npm의존성을 다시 설치하자
+
+npm install

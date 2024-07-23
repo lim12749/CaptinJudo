@@ -1,0 +1,79 @@
+Prisma db를 사용하기위한 설치
+
+설치
+npm i prisma i는 install약자
+
+사용
+npx prisma init 처음 초기사용
+
+그럼 prisma 폴더와 prisma.schema파일이 생김.
+.env도 생김
+
+Next steps:
+1. Set the DATABASE_URL in the .env file to point to your existing database. If your database has no tables yet, read https://pris.ly/d/getting-started
+2. Set the provider of the datasource block in schema.prisma to match your database: postgresql, mysql, sqlite, sqlserver, mongodb or cockroachdb.
+3. Run prisma db pull to turn your database schema into a Prisma schema.
+4. Run prisma generate to generate the Prisma Client. You can then start querying your database.
+그후 다음 절차를 알려줌
+
+database url에 .env를 연결하라고되어있는데우선 로컬로 지정되있게 했고
+나중에 배포하거나 실제 데이터베이스를 확보해서 연결해줘야함
+
+vscode에서 프리즈마 확장프로그램도 설치해줘야한다.
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+프리즈마스키마에서 db의 설정을 할수있는데 sqlite이부분에 내가 사용할 디비를 선택해서 정의해줄 수 있다 몽고 구글 이것저것 가능
+
+.env파일에는 내가 나중에 연결할 데이터베이스의 주소가 있는데 깃에 포함해서 올리거나 하지 말자 private를 유지해야함.
+
+
+model User{
+  id Int @id @default(autoincrement()) //자동으로 아이디를 부여하게함
+  username String @unique
+  email String? @unique
+  password String?                      //?의 이유는 sms 다른 로그인방법이 있어서
+  phone String? @unique
+  github_id String? @unique
+  avatar String?
+  created_at DateTime @default(now())   //사용자가 생성되는 시간을 부여함
+  updated_at DateTime @updatedAt        //사용자 수정하는 시간
+}
+
+이런식으로 스키마모델을 만들고나면
+프리즈마에 마이그레이션을 해줘야한다.
+npx prisma migrate dev
+
+하고나면 내 db에서 만든 변경사항을 계속해서 추적해야하기때문
+migrations/
+  └─ 20240709020925_add_user/
+    └─ migration.sql
+이름을 정해주면 이렇게 생성됬다고 폴더구조를 보여준다.
+
+
+async  function  test(){
+    const user = await db.user.create({
+        data:{
+            username:";a;a;a",
+            phone:"122112",
+        },
+    });
+    console.log(user);
+}
+lib에 db에 만들어진 유저를 알수 있다. js로그로 확인해봤다.
+
+콘솔창에서 스튜디오 열어보기
+npm prisma studio 를 입력하면 사이트가 열린다.
+
+스키마를 마이그레이션을 하기위해선 스튜디오를 끄고 마이그레이션 명령어( npx prisma migrate dev)
+를 실행하고 다시 스튜디오를 시작하면된다.
+
+
+npm i bcrypt
+비밀번호 해싱 만들어주는 패키지
+
+npm i @types/bcrypt  타입스크립트 적용시켜주는 패키지
+
+ npm i iron-session

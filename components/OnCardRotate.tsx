@@ -14,7 +14,6 @@ const ProfileCard = () => {
     남녀노소 모두 할 수 있는 유도! 유도가 궁금하시다면 용인대 캡틴 유도장으로 오세요. 즐겁고 건강한 유도 함께 해요!`;
     return (
         <div>
-
             <style jsx>{`
                 .rotate-y-180 {
                     transform: rotateY(180deg);
