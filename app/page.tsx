@@ -1,3 +1,4 @@
+// Home.tsx
 "use client";
 
 import Link from "next/link";
@@ -8,6 +9,15 @@ import Head from "next/head";
 export default function Home() {
     const [instaLink, setInstaLink] = useState("https://www.instagram.com/captain_judo/");
     const [naverLink, setNaverLink] = useState("https://m.blog.naver.com/captain_judo?tab=1");
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [loggedIn, setLoggedIn] = useState(false);
+
+    const StoryText = `용인대 유도학과 출신의 젊은 부부가 함께 운영하는 유도관 입니다.
+    두 아이의 부모로써 항상 부모의 마음으로 지도하고 있습니다.
+    707특수임무단 예비역 대위(ROTC 55기) 출신 관장님의 체계적인 운동 프로그램으로 유도뿐만 아니라 체력증진 및 다이어트가 가능합니다.
+    언제든 문의하시면 친절하게 상담 도와드리겠습니다.
+    남녀노소 모두 할 수 있는 유도! 유도가 궁금하시다면 용인대 캡틴 유도장으로 오세요. 즐겁고 건강한 유도 함께 해요!`;
 
     useEffect(() => {
         // API 호출하여 링크 정보 가져오기
@@ -16,30 +26,43 @@ export default function Home() {
             .then(data => {
                 if (data.instaLink) setInstaLink(data.instaLink);
                 if (data.naverLink) setNaverLink(data.naverLink);
+                if (data.isAdmin) setIsAdmin(data.isAdmin);
             })
             .catch(error => console.error('Error fetching links:', error));
+
+        // 로그인 상태 확인
+        fetch('/api/checkLogin')
+            .then(response => response.json())
+            .then(data => {
+                if (data.loggedIn) setLoggedIn(true);
+            })
+            .catch(error => console.error('Error checking login status:', error));
     }, []);
 
-    // 인스타그램 버튼 클릭 핸들러
-    const InstaButtonClick = () => {
-        window.location.href = instaLink;
+    const handleLinkUpdate = async (event) => {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        const newInstaLink = formData.get("instaLink");
+        const newNaverLink = formData.get("naverLink");
+
+        const response = await fetch('/api/updateLinks', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                instaLink: newInstaLink,
+                naverLink: newNaverLink,
+            }),
+        });
+
+        if (response.ok) {
+            setInstaLink(newInstaLink);
+            setNaverLink(newNaverLink);
+        } else {
+            console.error('Failed to update links');
+        }
     };
-
-    // 네이버 블로그 버튼 클릭 핸들러
-    const NaverBlogButtonClick = () => {
-        window.location.href = naverLink;
-    };
-
-    // 메뉴 열기/닫기 상태 관리
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const toggleMenu = () => { setIsMenuOpen(!isMenuOpen); };
-
-    // 스토리 텍스트
-    const StoryText = `용인대 유도학과 출신의 젊은 부부가 함께 운영하는 유도관 입니다.
-    두 아이의 부모로써 항상 부모의 마음으로 지도하고 있습니다.
-    707특수임무단 예비역 대위(ROTC 55기) 출신 관장님의 체계적인 운동 프로그램으로 유도뿐만 아니라 체력증진 및 다이어트가 가능합니다.
-    언제든 문의하시면 친절하게 상담 도와드리겠습니다.
-    남녀노소 모두 할 수 있는 유도! 유도가 궁금하시다면 용인대 캡틴 유도장으로 오세요. 즐겁고 건강한 유도 함께 해요!`;
 
     return (
         <>
@@ -52,24 +75,24 @@ export default function Home() {
                 {/* 상단 고정 네비게이션 바 */}
                 <div className="fixed w-full z-10">
                     <nav className="bg-white flex items-center justify-between p-4">
-                        <a href="http://localhost:8080" className="mx-2">
+                        <a href="/" className="mx-2">
                             <p className="text-3xl font-bold">CPT</p>
                         </a>
                         <button
                             type="button"
-                            onClick={toggleMenu}
+                            onClick={() => setIsMenuOpen(!isMenuOpen)}
                             className="bg-gray-200 rounded-xl w-8 h-8 mx-2"
                         />
                     </nav>
                     {isMenuOpen && (
                         <div className="w-full bg-white shadow-2xl z-10">
                             <ul className="flex flex-col p-4 space-y-8">
-                                <li><a href="/Login" onClick={toggleMenu}>공지사항</a></li>
-                                <li><a href="#section1" onClick={toggleMenu}>소개</a></li>
-                                <li><a href="#section2" onClick={toggleMenu}>시설</a></li>
-                                <li><a href="#section3" onClick={toggleMenu}>시간표</a></li>
-                                <li><a href="#section4" onClick={toggleMenu}>오시는길</a></li>
-                                <li><Link href="/Login">로그인</Link></li>
+                                <li><a href="#section1" onClick={() => setIsMenuOpen(false)}>소개</a></li>
+                                <li><a href="#section2" onClick={() => setIsMenuOpen(false)}>시설</a></li>
+                                <li><a href="#section3" onClick={() => setIsMenuOpen(false)}>시간표</a></li>
+                                <li><a href="#section4" onClick={() => setIsMenuOpen(false)}>오시는길</a></li>
+                                {!loggedIn && <li><Link href="/Login">로그인</Link></li>}
+                                {loggedIn && <li><Link href="/profile">프로필</Link></li>}
                             </ul>
                         </div>
                     )}
@@ -87,14 +110,14 @@ export default function Home() {
                         <div className="flex space-x-3 absolute bottom-4 right-4">
                             <button
                                 type="button"
-                                onClick={InstaButtonClick}
+                                onClick={() => window.location.href = instaLink}
                                 className="bg-green-500 rounded-xl w-12 h-12"
                             >
                                 <Image src="/img/InstagramIcon.png" alt="인스타그램 바로가기" width={200} height={200}/>
                             </button>
                             <button
                                 type="button"
-                                onClick={NaverBlogButtonClick}
+                                onClick={() => window.location.href = naverLink}
                                 className="bg-green-500 rounded-xl w-12 h-12 text-white font-bold text-lg"
                             >
                                 blog
@@ -140,6 +163,45 @@ export default function Home() {
                             </div>
                         </div>
                     </section>
+
+                    {/* 링크 수정 섹션 */}
+                    {isAdmin && (
+                        <section id="section5" className="flex flex-col p-4">
+                            <p className="text-4xl font-bold py-4 text-left">링크 수정</p>
+                            <div className="bg-white rounded-2xl w-full shadow-lg flex items-center flex-col">
+                                <form onSubmit={handleLinkUpdate} className="w-full max-w-xs">
+                                    <div>
+                                        <label htmlFor="instaLink" className="block text-sm font-medium text-gray-700">
+                                            Instagram Link
+                                        </label>
+                                        <input
+                                            type="text"
+                                            name="instaLink"
+                                            defaultValue={instaLink}
+                                            className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                                        />
+                                    </div>
+                                    <div className="mt-4">
+                                        <label htmlFor="naverLink" className="block text-sm font-medium text-gray-700">
+                                            Naver Blog Link
+                                        </label>
+                                        <input
+                                            type="text"
+                                            name="naverLink"
+                                            defaultValue={naverLink}
+                                            className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                                        />
+                                    </div>
+                                    <button
+                                        type="submit"
+                                        className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                                    >
+                                        Update Links
+                                    </button>
+                                </form>
+                            </div>
+                        </section>
+                    )}
 
                     {/* 내부 사진 섹션 */}
                     <section id="section2" className="flex flex-col items-start justify-start m-0 p-4">
