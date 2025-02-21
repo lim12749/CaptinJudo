@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import React, { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -18,6 +17,33 @@ export default function Home() {
     const StoryText = `용인대 유도학과 출신의 젊은 부부가 함께 운영하는 유도관 입니다.
     두 아이의 부모로써 항상 부모의 마음으로 지도하고 있습니다.
     707특수임무단 예비역 대위(ROTC 55기) 출신 관장님의 체계적인 운동 프로그램으로 유도뿐만 아니라 체력증진 및 다이어트가 가능합니다.`;
+
+    const scheduleItems = [
+        {
+            title: "초등부",
+            time: "17:30 ~ 18:20",
+            duration: "50분",
+            color: "yellow"
+        },
+        {
+            title: "전연령 1부",
+            time: "19:30 ~ 20:30",
+            duration: "60분",
+            color: "blue"
+        },
+        {
+            title: "전연령 2부",
+            time: "21:00 ~ 22:00",
+            duration: "60분",
+            color: "blue"
+        },
+        {
+            title: "선수 입시반",
+            time: "22:10 ~",
+            duration: "특별반",
+            color: "red"
+        }
+    ];
 
     return (
         <div className="flex flex-col w-full relative text-black">
@@ -173,7 +199,7 @@ export default function Home() {
                             >
                                 <div className="relative aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl">
                                     <Image
-                                        src="/img/Profile01.jpg"
+                                        src="/img/Profile2.jpg"
                                         alt="관장님 프로필"
                                         layout="fill"
                                         objectFit="cover"
@@ -285,42 +311,31 @@ export default function Home() {
                     whileInView="visible"
                     viewport={{ once: true }}
                     variants={fadeIn}
-                    className="py-32 px-4 bg-gradient-to-b from-white to-gray-50"
+                    className="py-20 md:py-32 px-4 bg-white"
                 >
                     <div className="max-w-4xl mx-auto">
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8 }}
-                            className="text-center mb-20"
-                        >
-                            <h2 className="text-4xl font-bold tracking-tight text-gray-900">정규 시간표</h2>
+                        <motion.div className="text-center mb-16">
+                            <h2 className="text-3xl md:text-4xl font-bold text-gray-900">정규 시간표</h2>
                             <div className="w-24 h-1 bg-blue-600 mx-auto mt-4 rounded-full"/>
                         </motion.div>
 
-                        <div className="space-y-6">
-                            {[
-                                { title: "초등부", time: "17:30 ~ 18:20", duration: "50분", color: "yellow" },
-                                { title: "전연령 1부", time: "19:30 ~ 20:30", duration: "60분", color: "blue" },
-                                { title: "전연령 2부", time: "21:00 ~ 22:00", duration: "60분", color: "blue" },
-                                { title: "선수 입시반", time: "22:10 ~", duration: "특별반", color: "red" }
-                            ].map((item, index) => (
+                        <div className="space-y-4">
+                            {scheduleItems.map((item, index) => (
                                 <motion.div
                                     key={index}
                                     initial={{ opacity: 0, x: -20 }}
                                     whileInView={{ opacity: 1, x: 0 }}
                                     transition={{ duration: 0.5, delay: index * 0.1 }}
-                                    whileHover={{ scale: 1.02 }}
-                                    className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300"
+                                    className="bg-white rounded-xl md:rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300"
                                 >
-                                    <div className="flex items-center">
-                                        <div className={`w-2 h-full bg-${item.color}-${item.color === "yellow" ? "400" : "500"}`}/>
-                                        <div className="flex-1 p-6">
-                                            <h3 className="text-xl font-bold text-gray-900">{item.title}</h3>
-                                            <p className="text-gray-600 mt-2">{item.time}</p>
+                                    <div className="flex items-center p-4 md:p-6">
+                                        <div className={`w-2 h-16 bg-${item.color}-${item.color === "yellow" ? "400" : "500"}`}/>
+                                        <div className="flex-1 px-4 md:px-6">
+                                            <h3 className="text-lg md:text-xl font-bold text-gray-900">{item.title}</h3>
+                                            <p className="text-gray-600 mt-1">{item.time}</p>
                                         </div>
-                                        <div className="px-6">
-                                            <span className={`inline-flex items-center px-4 py-1 rounded-full text-sm font-medium bg-${item.color}-100 text-${item.color}-800`}>
+                                        <div className="px-4">
+                                            <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-${item.color}-100 text-${item.color}-800`}>
                                                 {item.duration}
                                             </span>
                                         </div>
@@ -329,14 +344,13 @@ export default function Home() {
                             ))}
                         </div>
 
-                        <motion.div
+                        <motion.p
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5, delay: 0.4 }}
-                            className="mt-12 text-center text-gray-500 text-sm"
+                            className="mt-8 text-center text-gray-500 text-sm"
                         >
                             * 수업 시작 10분 전까지 도착해주세요
-                        </motion.div>
+                        </motion.p>
                     </div>
                 </motion.section>
 
@@ -347,53 +361,33 @@ export default function Home() {
                     whileInView="visible"
                     viewport={{ once: true }}
                     variants={fadeIn}
-                    className="py-32 px-4 bg-gradient-to-b from-gray-50 to-white"
+                    className="py-20 md:py-32 px-4 bg-gradient-to-b from-gray-50 to-white"
                 >
                     <div className="max-w-7xl mx-auto">
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8 }}
-                            className="text-center mb-20"
-                        >
-                            <h2 className="text-4xl font-bold tracking-tight text-gray-900">오시는 길</h2>
+                        <motion.div className="text-center mb-16">
+                            <h2 className="text-3xl md:text-4xl font-bold text-gray-900">오시는 길</h2>
                             <div className="w-24 h-1 bg-blue-600 mx-auto mt-4 rounded-full"/>
                         </motion.div>
 
                         <div className="grid lg:grid-cols-5 gap-8">
-                            <motion.div
-                                initial={{ opacity: 0, x: -20 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                transition={{ duration: 0.8 }}
-                                className="lg:col-span-3"
-                            >
-                                <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
+                            <div className="lg:col-span-3">
+                                <div className="bg-white rounded-2xl md:rounded-3xl shadow-xl overflow-hidden">
                                     <iframe
                                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12697.073656980016!2d127.09277361342654!3d37.288771867609384!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357b5a62484cad8b%3A0xa3db3971ddeca119!2z6rK96riw64-EIOyaqeyduOyLnCDquLDtnaXqtawg7Iug6rCI64-ZIDcyMg!5e0!3m2!1sko!2skr!4v1717093129502!5m2!1sko!2skr"
                                         width="100%"
-                                        height="500"
+                                        height="400"
+                                        className="md:h-[500px]"
                                         style={{border: 0}}
                                         allowFullScreen
                                         loading="lazy"
                                         referrerPolicy="no-referrer-when-downgrade"
                                     ></iframe>
                                 </div>
-                            </motion.div>
+                            </div>
 
-                            <motion.div
-                                initial={{ opacity: 0, x: 20 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                transition={{ duration: 0.8 }}
-                                className="lg:col-span-2 space-y-6"
-                            >
-                                <div className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-shadow">
-                                    <h3 className="text-xl font-bold mb-4 flex items-center">
-                                        <svg className="w-6 h-6 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                        </svg>
-                                        도로명 주소
-                                    </h3>
+                            <div className="lg:col-span-2 space-y-4">
+                                <div className="bg-white rounded-xl md:rounded-2xl shadow-lg p-6 hover:shadow-xl transition-shadow">
+                                    <h3 className="text-xl font-bold mb-4">도로명 주소</h3>
                                     <p className="text-gray-600">
                                         경기 용인시 기흥구 새천년로16번길 3-2 2층 201호
                                     </p>
@@ -402,26 +396,7 @@ export default function Home() {
                                     </p>
                                 </div>
 
-                                <div className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-shadow">
-                                    <h3 className="text-xl font-bold mb-4 flex items-center">
-                                        <svg className="w-6 h-6 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
-                                        </svg>
-                                        교통 안내
-                                    </h3>
-                                    <ul className="space-y-3 text-gray-600">
-                                        <li className="flex items-start">
-                                            <span className="w-5 h-5 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mr-2 mt-1">
-                                                <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                                                    <path fillRule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clipRule="evenodd"/>
-                                                </svg>
-                                            </span>
-                                            <span>자가용: 건물 내 주차 가능</span>
-                                        </li>
-                                    </ul>
-                                </div>
-
-                                <div className="bg-blue-50 rounded-2xl p-6">
+                                <div className="bg-blue-50 rounded-xl md:rounded-2xl p-6">
                                     <h3 className="text-lg font-medium text-blue-900 mb-2">
                                         찾아오시는 길 문의
                                     </h3>
@@ -432,7 +407,7 @@ export default function Home() {
                                         전화하기
                                     </button>
                                 </div>
-                            </motion.div>
+                            </div>
                         </div>
                     </div>
                 </motion.section>
